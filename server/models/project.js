@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'WorkerProjects',
       foreignKey: 'projectId'
     });
+    Project.hasMany(models.Todo);
   };
   return Project;
 };
