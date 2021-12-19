@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     last_name: {
-      type: DataTypes.STRING,
-      defaultValue: false,
+      type: DataTypes.STRING
     },
     email: {
       type: DataTypes.STRING,
@@ -20,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Worker.belongsToMany(models.Project, {
       through: 'WorkerProjects',
-      foreignKey: 'projectId'
+      foreignKey: 'workerId'
     });
   };
   return Worker;

@@ -31,7 +31,7 @@ module.exports = {
           key: 'id',
           as: 'todoId',
         },
-      },
+      }
     }),
   down: (queryInterface /* , Sequelize */) =>
     queryInterface.dropTable('TodoItems'),

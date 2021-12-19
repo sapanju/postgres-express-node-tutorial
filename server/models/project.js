@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Project.associate = (models) => {
     Project.belongsToMany(models.Worker, {
       through: 'WorkerProjects',
-      foreignKey: 'workerId'
+      foreignKey: 'projectId'
     });
   };
   return Project;

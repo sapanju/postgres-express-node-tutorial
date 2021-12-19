@@ -1,5 +1,7 @@
 const todosController = require('../controllers').todos;
 const todoItemsController = require('../controllers').todoItems;
+const workersController = require('../controllers').workers;
+const projectsController = require('../controllers').projects;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -20,4 +22,7 @@ module.exports = (app) => {
   app.all('/api/todos/:todoId/items', (req, res) => res.status(405).send({
     message: 'Method Not Allowed',
   }));
+
+  app.post('/api/workers', workersController.create);
+  app.post('/api/projects', projectsController.create);
 };
