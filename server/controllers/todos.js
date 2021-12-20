@@ -2,25 +2,26 @@ const Todo = require('../models').Todo;
 const TodoItem = require('../models').TodoItem;
 
 module.exports = {
-  create(req, res) {
-    return Todo
-      .create({
+  async create(req, res) {
+    try {
+      const todo = await Todo.create({
         title: req.body.title,
-      })
-      .then((todo) => res.status(201).send(todo))
-      .catch((error) => res.status(400).send(error));
+      });
+      res.status(201).send(todo);
+    } catch (error) {
+      res.status(400).send(error)
+    }
   },
 
   list(req, res) {
     return Todo
       .findAll({
         include: [{
-          model: TodoItem,
-          as: 'todoItems',
+          model: TodoItem
         }],
         order: [
           ['createdAt', 'DESC'],
-          [{ model: TodoItem, as: 'todoItems' }, 'createdAt', 'ASC'],
+          [{ model: TodoItem }, 'createdAt', 'ASC'],
         ],
       })
       .then((todos) => res.status(200).send(todos))
@@ -31,8 +32,7 @@ module.exports = {
     return Todo
       .findById(req.params.todoId, {
         include: [{
-          model: TodoItem,
-          as: 'todoItems',
+          model: TodoItem
         }],
       })
       .then((todo) => {
@@ -50,8 +50,7 @@ module.exports = {
     return Todo
       .findById(req.params.todoId, {
         include: [{
-          model: TodoItem,
-          as: 'todoItems',
+          model: TodoItem
         }],
       })
       .then(todo => {
