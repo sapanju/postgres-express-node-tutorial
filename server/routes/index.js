@@ -1,6 +1,7 @@
 const todosController = require('../controllers').todos;
 const todoItemsController = require('../controllers').todoItems;
 const projectsController = require('../controllers').projectsController;
+const usersController = require('../controllers').usersController;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -24,5 +25,7 @@ module.exports = (app) => {
 
   app.post('/api/projects', projectsController.create);
   app.post('/api/projects/:projectId/users', projectsController.addUserToProject);
+
+  app.get('/api/users/:userId', usersController.getUser);
 
 };
