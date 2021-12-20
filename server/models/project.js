@@ -1,11 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     title: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     }
   });
   Project.associate = (models) => {
