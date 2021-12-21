@@ -6,6 +6,8 @@ module.exports = {
     try {
       const todo = await Todo.create({
         title: req.body.title,
+        ProjectId: req.body.ProjectId,
+        UserId: req.body.UserId
       });
       res.status(201).send(todo);
     } catch (error) {

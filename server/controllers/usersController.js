@@ -20,9 +20,20 @@ module.exports = {
   async getUser(req, res) {
     try {
       const include = [];
+      const todosWhere = {};
       if (req.query && req.query.include && req.query.include.match(/project/)) {
         include.push({
-          model: Project
+          model: Project,
+          include: [{
+            model: Todo
+          }]
+        });
+        todosWhere.ProjectId = null;  
+      }
+      if (req.query && req.query.include && req.query.include.match(/todo/)) {
+        include.push({
+          model: Todo,
+          where: todosWhere
         });
       }
       const user = await User.findByPk(req.params.userId, {
