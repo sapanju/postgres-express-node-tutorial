@@ -25,7 +25,10 @@ module.exports = {
         include.push({
           model: Project,
           include: [{
-            model: Todo
+            model: Todo,
+            include: [{
+              model: TodoItem
+            }]
           }]
         });
         todosWhere.ProjectId = null;  
@@ -33,6 +36,9 @@ module.exports = {
       if (req.query && req.query.include && req.query.include.match(/todo/)) {
         include.push({
           model: Todo,
+          include: [{
+            model: TodoItem
+          }],
           where: todosWhere
         });
       }
