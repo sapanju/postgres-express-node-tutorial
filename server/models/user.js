@@ -9,6 +9,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     lastName: {
       type: DataTypes.STRING,
+    },
+    passwordHash: {
+      type: DataTypes.STRING
+    },
+    lastIp: {
+      type: DataTypes.STRING
+    },
+    lastLoggedIn: {
+      type: DataTypes.DATE
+    },
+    role: {
+      type: DataTypes.ENUM,
+      values: ['admin', 'manager', 'contributer'],
+      defaultValue: 'contributer'
     }
   });
   User.associate = (models) => {
