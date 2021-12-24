@@ -88,10 +88,10 @@ module.exports = {
           where: todosWhere
         });
       }
-      const user = await User.findByPk(req.params.userId, {
+      const user = await User.findByPk(req.user.id, {
         include
       });
-      res.status(201).send(user);
+      res.status(200).send(user);
     } catch (error) {
       res.status(400).send(error)
     }
