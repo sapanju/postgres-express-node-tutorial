@@ -2,16 +2,40 @@ const Todo = require('../models').Todo;
 const TodoItem = require('../models').TodoItem;
 const Project = require('../models').Project;
 const User = require('../models').User;
+const bcrypt = require('bcrypt');
+const moment = require('moment');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+// get config vars
+dotenv.config();
+
+function generateAccessToken(userId, email) {
+  return jwt.sign({
+    userId,
+    email
+  }, process.env.TOKEN_SECRET, { expiresIn: '900s' });
+}
 
 module.exports = {
-  async create(req, res) {
+  async register(req, res) {
     try {
-      const { email, firstName, lastName } = req.body.user;
+      const { email, firstName, lastName, password } = req.body.user;
+      // hash pw
+      const passwordHash = await bcrypt.hash(password, 10);
       const user = await User.create({
         email,
         firstName,
-        lastName
+        lastName,
+        passwordHash,
+        lastIp: req.ip,
+        lastLoggedIn: moment().format()
       });
+
+      // issue jwt
+      const token = generateAccessToken(user.id, email);
+
+      res.cookie("jwt", token, {secure: true, httpOnly: true})
       res.status(201).send(user);
     } catch (error) {
       res.status(400).send(error)

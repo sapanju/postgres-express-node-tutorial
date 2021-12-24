@@ -27,5 +27,6 @@ module.exports = (app) => {
   app.post('/api/projects/:projectId/users', projectsController.addUserToProject);
 
   app.get('/api/users/:userId', usersController.getUser);
+  app.post('/api/users', usersController.register);
 
 };
