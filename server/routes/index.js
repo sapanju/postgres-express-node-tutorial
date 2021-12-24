@@ -2,6 +2,7 @@ const todosController = require('../controllers').todos;
 const todoItemsController = require('../controllers').todoItems;
 const projectsController = require('../controllers').projectsController;
 const usersController = require('../controllers').usersController;
+const authController = require('../controllers').authController;
 const authenticateToken = require('./middleware').authenticateToken;
 const authenticateAdmin = require('./middleware').authenticateAdmin;
 
@@ -30,5 +31,6 @@ module.exports = (app) => {
 
   app.get('/api/users', authenticateToken, usersController.getUser); // dashboard endpoint
   app.post('/api/users', usersController.register);
-  app.post('/login', usersController.login);
+  app.post('/login', authController.login);
+  app.get('/logout', authController.logout);
 };

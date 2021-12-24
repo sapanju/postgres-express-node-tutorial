@@ -4,18 +4,7 @@ const Project = require('../models').Project;
 const User = require('../models').User;
 const bcrypt = require('bcrypt');
 const moment = require('moment');
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-
-// get config vars
-dotenv.config();
-
-function generateAccessToken(userId, email) {
-  return jwt.sign({
-    userId,
-    email
-  }, process.env.TOKEN_SECRET, { expiresIn: '900s' });
-}
+const generateAccessToken = require('../utils/authUtils').generateAccessToken;
 
 module.exports = {
   async register(req, res) {
@@ -35,29 +24,7 @@ module.exports = {
       // issue jwt
       const token = generateAccessToken(user.id, email);
 
-      res.cookie("jwt", token, {secure: true, httpOnly: true})
-      res.status(201).send(user);
-    } catch (error) {
-      res.status(400).send(error)
-    }
-  },
-  async login(req, res) {
-    try {
-      const { email, password } = req.body.user;
-      // hash pw
-      const user = await User.findOne({
-        where: { email }
-      });
-
-      if (!bcrypt.compareSync(password, user.passwordHash)) {
-        res.status(401).send('Incorrect password');
-        return;
-      }
-
-      // issue jwt
-      const token = generateAccessToken(user.id, email);
-
-      res.cookie("jwt", token, {secure: true, httpOnly: true})
+      res.cookie('jwt', token, {secure: true, httpOnly: true})
       res.status(201).send(user);
     } catch (error) {
       res.status(400).send(error)
