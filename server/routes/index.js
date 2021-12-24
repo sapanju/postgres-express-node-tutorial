@@ -28,5 +28,6 @@ module.exports = (app) => {
 
   app.get('/api/users/:userId', usersController.getUser);
   app.post('/api/users', usersController.register);
+  app.post('/login', usersController.login);
 
 };
