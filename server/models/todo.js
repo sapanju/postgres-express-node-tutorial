@@ -6,10 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   Todo.associate = (models) => {
-    Todo.hasMany(models.TodoItem, {
-      foreignKey: 'todoId',
-      as: 'todoItems',
-    });
+    Todo.hasMany(models.TodoItem);
+    Todo.belongsTo(models.Project);
+    Todo.belongsTo(models.User);
   };
   return Todo;
 };

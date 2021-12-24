@@ -5,7 +5,7 @@ module.exports = {
     return TodoItem
       .create({
         content: req.body.content,
-        todoId: req.params.todoId,
+        TodoId: req.params.todoId,
       })
       .then(todoItem => res.status(201).send(todoItem))
       .catch(error => res.status(400).send(error));
@@ -16,7 +16,7 @@ module.exports = {
       .find({
         where: {
           id: req.params.todoItemId,
-          todoId: req.params.todoId,
+          TodoId: req.params.todoId,
         },
       })
       .then(todoItem => {
@@ -42,7 +42,7 @@ module.exports = {
       .find({
         where: {
           id: req.params.todoItemId,
-          todoId: req.params.todoId,
+          TodoId: req.params.todoId,
         },
       })
       .then(todoItem => {
