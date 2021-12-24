@@ -62,5 +62,33 @@ module.exports = {
     } catch (error) {
       res.status(400).send(error)
     }
+  },
+  async updateUser(req, res) {
+    // update a user's first or last name
+    try {
+      const updateParams = {};
+      if (req.body.user && req.body.user.firstName) {
+        updateParams.firstName = req.body.user.firstName;
+      }
+      if (req.body.user && req.body.user.lastName) {
+        updateParams.lastName = req.body.user.lastName;
+      }
+
+      await User.update({
+        ...updateParams
+      }, {
+        where: {
+          id: req.user.id
+        }
+      });
+      res.status(200).send({
+        user: {
+          ...req.user.toJSON(),
+          ...updateParams
+        }
+      });
+    } catch (error) {
+      res.status(400).send(`Could not update user, ${error}`);
+    }
   }
 };

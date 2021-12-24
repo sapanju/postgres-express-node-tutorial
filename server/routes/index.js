@@ -31,6 +31,7 @@ module.exports = (app) => {
 
   app.get('/api/users', authenticateToken, usersController.getUser); // dashboard endpoint
   app.post('/api/users', usersController.register);
+  app.put('/api/users', authenticateToken, usersController.updateUser);
   app.post('/login', authController.login);
   app.get('/logout', authController.logout);
 };
